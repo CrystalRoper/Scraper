@@ -1,0 +1,63 @@
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="/">Latest Articles</a>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav">
+        <a class="nav-link" href="/saved">Saved Articles</a>
+        <a class="btn btn-danger" href="/scrape">Scrape Lastest Articles</a>
+        <a class="btn btn-danger clear" href="/clear">Clear Scraped Articles</a>
+      </ul>
+    </div>
+  </nav>
+
+  {{#each articles}}
+  <div class="card" style="position: relative;">
+    <div class="card-body" style="position: relative;">
+      <h5 class="card-title">{{headline}}</h5>
+      <h6 class="card-text">{{summary}}</h6>
+      <div>
+        <a class="btn btn-danger" href="{{url}}">Read More</a>
+        {{#if saved}}
+        <a class="btn btn-danger" href="/unsave?id={{id}}">Remove From Saved Articles</a>
+        <button type="button" class="btn btn-danger notes" data-toggle="modal" data-target="#notesModal"
+          data-noteid="{{id}}">Notes</button>
+        {{else}}
+        <a class="btn btn-danger" href="/save?id={{id}}">Add To Saved Articles</a>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  {{/each}}
+
+  <div id="notesModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Notes</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <textarea id="newNote" placeholder="New note" style="width: 100%; height: 100px;"></textarea>
+          <a class="btn btn-danger" data-toggle="collapse" href="#collapseNotes" role="button" aria-expanded="false"
+            aria-controls="collapseNotes">
+            Current Notes <span id="noteCount" class="badge badge-light">9</span>
+          </a>
+          <div class="collapse show" id="collapseNotes">
+            <ul id="currentNotes" class="list-group">
+            </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary saveNote">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{#if script}}
+<script type="text/javascript" src="assets/js/{{script}}"></script>
+{{/if}}
